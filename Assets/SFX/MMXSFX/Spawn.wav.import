@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Spawn.wav-b0ef514b5baf6f6d3603b1a575210b89.sample"
+
+[deps]
+
+source_file="res://Assets/SFX/MMXSFX/Spawn.wav"
+dest_files=[ "res://.import/Spawn.wav-b0ef514b5baf6f6d3603b1a575210b89.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/MegamanX-StormEagle(RockMetalCover).wav-8cafe1ad5bbe1098af240785fe0582dd.sample"
+
+[deps]
+
+source_file="res://Assets/Song/MegamanX-StormEagle(RockMetalCover).wav"
+dest_files=[ "res://.import/MegamanX-StormEagle(RockMetalCover).wav-8cafe1ad5bbe1098af240785fe0582dd.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
