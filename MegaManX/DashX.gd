@@ -12,8 +12,9 @@ func _handle_input():
 		if !MMX.is_on_floor():
 			MMX.lastState="Fall"
 			return "Fall"
-		MMX.lastState="Idle"
-		return "Idle"
+		else:
+			MMX.lastState="Idle"
+			return "Idle"
 	#GetInput
 	MMX.input_vector=Vector2.ZERO
 	MMX.input_vector.x=Input.get_action_strength("ui_right")-Input.get_action_strength("ui_left")
@@ -42,9 +43,12 @@ func _handle_input():
 		MMX.velocity.x=-MMX.DASHSPEED
 	if Input.is_action_just_released("Dash"):
 		MMX.SFX.stop()
-		MMX.lastState="Move"
-		MMX.can_dash=true
-		return "Move"
+		if !MMX.is_on_floor():
+			MMX.lastState="Fall"
+			return "Fall"
+		else:
+			MMX.lastState="Idle"
+			return "Idle"
 		
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 	

@@ -1,7 +1,7 @@
 extends "res://MegaManX/StateMachineX.gd"
 
 func _enter_state():
-	MMX.animationPlayer.play("Wallshot")
+	MMX.animationPlayer.play("WallShot")
 	MMX.shoot()
 	MMX.fire()
 	
@@ -25,6 +25,7 @@ func _handle_input():
 		return "Idle"
 	#NormalShot
 	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
+		MMX.shoot()
 		MMX.fire()
 		
 	if Input.is_action_just_pressed("Jump")&&Input.is_action_pressed("Dash"):

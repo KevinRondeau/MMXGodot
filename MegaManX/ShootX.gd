@@ -6,10 +6,14 @@ func _enter_state():
 	MMX.shoot()
 	MMX.fire()
 func _handle_input():
-	if MMX.animationPlayer.get_current_animation_position()>0.7&&MMX.animationPlayer.get_current_animation()=="DashFire":
-		MMX.can_dash=true
-		MMX.lastState="Idle"
-		return "Idle"
+	if MMX.animationPlayer.get_current_animation_position()>0.75&&MMX.animationPlayer.get_current_animation()=="DashFire":
+		MMX.SFX.stop()
+		if !MMX.is_on_floor():
+			MMX.lastState="Fall"
+			return "Fall"
+		else:
+			MMX.lastState="Idle"
+			return "Idle"
 	if MMX.lastState=="Idle":
 		MMX.velocity.y=0
 	#GetInput
@@ -48,7 +52,14 @@ func _handle_input():
 		return "Move"
 	if MMX.input_vector==Vector2.ZERO&&MMX.animationPlayer.current_animation=="RunFire":
 		MMX.shot_ended() 
-		
+	if Input.is_action_just_released("Dash"):
+		MMX.SFX.stop()
+		if !MMX.is_on_floor():
+			MMX.lastState="Fall"
+			return "Fall"
+		else:
+			MMX.lastState="Idle"
+			return "Idle"
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 	MMX.shoot()
 	if MMX.is_on_floor()&&MMX.lastState=="Fall"||MMX.is_on_floor()&&MMX.animationPlayer.current_animation=="JumpFire":
