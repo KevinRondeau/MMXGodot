@@ -23,13 +23,10 @@ func _handle_input():
 	#Shoot
 	if Input.is_action_just_released("Attack")&&MMX.can_shoot&&MMX.charge>50:
 		MMX.lastState="Jump"
-		MMX.fire()
 		return "Shoot"
 		#NormalShot
 	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
 		MMX.lastState="Jump"
-		MMX.fire()
-		MMX.charge=0
 		return "Shoot"
 		
 	MMX.animationPlayer.play("Jump")

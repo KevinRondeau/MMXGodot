@@ -13,7 +13,6 @@ func _handle_input():
 		MMX.FullParticle.emitting=false
 		MMX.FullParticle.visible=false
 		MMX.lastState="Fall"
-		MMX.fire()
 		return "Shoot"
 	#Charge
 	if Input.is_action_pressed("Attack"):

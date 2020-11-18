@@ -30,13 +30,10 @@ func _handle_input():
 		
 	if Input.is_action_just_released("Attack")&&MMX.can_shoot&&MMX.charge>50:
 		MMX.lastState="Idle"
-		MMX.fire()
 		return "Shoot"
 		#NormalShot
 	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
 		MMX.lastState="Idle"
-		MMX.fire()
-		MMX.charge=0
 		return "Shoot"
 	if Input.is_action_just_pressed("Dash")&&MMX.can_dash:
 		MMX.lastState="Dash"

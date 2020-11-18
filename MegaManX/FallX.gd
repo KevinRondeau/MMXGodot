@@ -34,12 +34,10 @@ func _handle_input():
 	#Shoot
 	if Input.is_action_just_released("Attack")&&MMX.can_shoot&&MMX.charge>50:
 		MMX.lastState="Fall"
-		MMX.fire()
 		return "Shoot"
 		#NormalShot
 	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
 		MMX.lastState="Fall"
-		MMX.charge=0
 		return "Shoot"
 	if MMX.is_on_wall()&&MMX.input_vector.x!=0:
 		return "WallGrab"

@@ -87,26 +87,26 @@ func _physics_process(_delta):
 	if update_state!=null:
 		change_state(update_state);
 		currentState._enter_state()
-	#Charge
-	if Input.is_action_pressed("Attack"):
-		charge+=1
-	#ChargeEffect
-	if charge>49:
-		if !ChargeSound.is_playing():
-			ChargeSound.play()
-		print (ChargeSound.get_playback_position())
-		if ChargeSound.get_playback_position()>2.8:
-			ChargeSound.play(1.8)
-			
-		FirstParticle.emitting=true
-		FirstParticle.visible=true
-	if charge>145:
-		if charge>150:
-			charge=150
-		FirstParticle.emitting=false
-		FirstParticle.visible=false
-		FullParticle.emitting=true
-		FullParticle.visible=true
+	if currentState!=States.Spawn:
+		#Charge
+		if Input.is_action_pressed("Attack"):
+			charge+=1
+		#ChargeEffect
+		if charge>49:
+			if !ChargeSound.is_playing():
+				ChargeSound.play()
+			if ChargeSound.get_playback_position()>2.8:
+				ChargeSound.play(1.8)
+				
+			FirstParticle.emitting=true
+			FirstParticle.visible=true
+		if charge>145:
+			if charge>150:
+				charge=150
+			FirstParticle.emitting=false
+			FirstParticle.visible=false
+			FullParticle.emitting=true
+			FullParticle.visible=true
 	#Facing
 	if face_right!=actual_facing:
 		sprite.scale.x*=-1
@@ -115,7 +115,6 @@ func _physics_process(_delta):
 		JumpFire.position.x*=-1
 		DashFire.position.x*=-1
 		actual_facing=face_right
-	print (update_state)
 	if currentState==States.WallGrab:
 		velocity.y+=GRAVITY
 		if(velocity.y>MAXFALLSPEED/4):
@@ -141,14 +140,14 @@ func fire():
 		fireTimer.start(0.3)
 		$ShotTimer.start(0.1)
 		bullet=BULLET.instance()
-	if charge>=50&&charge<150:
+	elif charge>=50&&charge<150:
 		Charge1.play()
-		$ShotTimer.start(1.0)
+		$ShotTimer.start(0.5)
 		fireTimer.start(0.5)
 		bullet=FIRSTCHARGE.instance()
-	if charge>=144:
+	elif charge>=144:
 		Charge2.play()
-		$ShotTimer.start(1.0)
+		$ShotTimer.start(0.5)
 		fireTimer.start(0.5)
 		bullet=MAXCHARGE.instance()
 	if face_right==true:

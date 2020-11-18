@@ -377,9 +377,11 @@ script = ExtResource( 14 )
 [node name="DeadX" type="Node" parent="StateMachineX"]
 
 [node name="SFX" type="AudioStreamPlayer2D" parent="."]
+visible = false
 volume_db = -2.0
 
 [node name="ChargeSound" type="AudioStreamPlayer2D" parent="."]
+visible = false
 volume_db = -2.0
 bus = "SFX"
 
@@ -389,12 +391,15 @@ volume_db = -4.0
 autoplay = true
 
 [node name="Charge2" type="AudioStreamPlayer2D" parent="."]
+visible = false
 stream = ExtResource( 16 )
 
 [node name="Charge1" type="AudioStreamPlayer2D" parent="."]
+visible = false
 stream = ExtResource( 18 )
 
 [node name="Shot" type="AudioStreamPlayer2D" parent="."]
+visible = false
 stream = ExtResource( 17 )
 [connection signal="timeout" from="Firing" to="." method="_on_Firing_timeout"]
 [connection signal="timeout" from="ShotTimer" to="." method="_on_ShotTimer_timeout"]

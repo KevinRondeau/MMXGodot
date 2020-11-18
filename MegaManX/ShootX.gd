@@ -63,11 +63,7 @@ func _handle_input():
 		return "Fall"
 	if MMX.is_on_wall()&&MMX.animationPlayer.current_animation=="JumpFire":
 		return "WallGrab"
-	if Input.is_action_just_released("Attack")&&MMX.can_shoot&&MMX.charge>50:
-		if MMX.lastState=="Idle":
-			MMX.animationPlayer.seek(0.0)
-		MMX.fire()
-		#NormalShot
+	#NormalShot
 	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
 		MMX.fire()
 

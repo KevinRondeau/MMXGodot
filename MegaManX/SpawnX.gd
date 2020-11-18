@@ -1,5 +1,5 @@
 extends "res://MegaManX/StateMachineX.gd"
-
+var Spawned=false
 func _ready():
 	pass
 
@@ -12,6 +12,8 @@ func _handle_input():
 		MMX.velocity.y=500
 		MMX.velocity = MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 	if MMX.is_on_floor():
-		MMX.SFX.stream=MMX.SpawnSound
-		MMX.SFX.play(0.2)
+		if !Spawned:
+			MMX.SFX.stream=MMX.SpawnSound
+			MMX.SFX.play()
+			Spawned=true
 		MMX.animationPlayer.play("Spawn")
