@@ -40,5 +40,6 @@ func _handle_input():
 		MMX.lastState="Fall"
 		return "Shoot"
 	if MMX.is_on_wall()&&MMX.input_vector.x!=0:
+		MMX.lastState="Fall"
 		return "WallGrab"
 

@@ -1,15 +1,12 @@
 extends "res://MegaManX/StateMachineX.gd"
 
 func _enter_state():
-	if MMX.velocity.y<0:
-		MMX.velocity.y=0
-	if MMX.animationPlayer.current_animation!="WallGrab":
-		MMX.animationPlayer.play("WallGrab")
-	MMX.lastState="WallGrab"
+	MMX.animationPlayer.play("Wallshot")
+	MMX.shoot()
+	MMX.fire()
 	
 		
 func _handle_input():
-
 	#GetInput
 	MMX.input_vector=Vector2.ZERO
 	MMX.input_vector.x=Input.get_action_strength("ui_right")-Input.get_action_strength("ui_left")
@@ -26,6 +23,9 @@ func _handle_input():
 	if MMX.is_on_floor():
 		MMX.lastState="Idle"
 		return "Idle"
+	#NormalShot
+	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
+		MMX.fire()
 		
 	if Input.is_action_just_pressed("Jump")&&Input.is_action_pressed("Dash"):
 		if MMX.face_right==true:
@@ -53,11 +53,4 @@ func _handle_input():
 			MMX.jumpState="Move"
 			MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)
 			return "WallKick"
-	if Input.is_action_just_released("Attack")&&MMX.can_shoot&&MMX.charge>50:
-		MMX.lastState="WallGrab"
-		return "WallShot"
-	#NormalShot
-	if Input.is_action_just_pressed("Attack")&&MMX.can_shoot:
-		MMX.lastState="WallGrab"
-		return "WallShot"
 	MMX.velocity=MMX.move_and_slide(MMX.velocity,MMX.FLOOR)

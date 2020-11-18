@@ -7,6 +7,7 @@ export var MAXFALLSPEED=1000
 export var JUMPFORCE=-2000
 
 const FLOOR=Vector2(0,-1)
+
 #Input&Facing
 var input_vector=Vector2.ZERO
 var velocity=Vector2.ZERO
@@ -16,10 +17,12 @@ var can_jump
 var can_shoot
 var can_dash;
 var charge=0;
+
 #preload scene to shoot bullet
 const BULLET=preload("res://MegaManX/Bullet.tscn")
 const FIRSTCHARGE=preload("res://MegaManX/FirstCharge.tscn")
 const MAXCHARGE=preload("res://MegaManX/MaxCharge.tscn")
+
 #preload Sounds
 var SpawnFallSound=load("res://Assets/SFX/MMXSFX/Spawn.wav")
 var SpawnSound=load("res://Assets/SFX/MMXSFX/Spawn2.wav")
@@ -31,6 +34,7 @@ var Charge1Sound=load("res://Assets/SFX/MMXSFX/Charged1.wav")
 var Charge2Sound=load("res://Assets/SFX/MMXSFX/Charged2.wav")
 var WallKickSound=load( "res://Assets/SFX/MMXSFX/WallKick.wav")
 var DeathSound=load("res://Assets/SFX/MMXSFX/XDeath.wav")
+
 onready var States={
 	"Spawn": $StateMachineX/SpawnX,
 	"Idle" : $StateMachineX/IdleX,
@@ -40,9 +44,11 @@ onready var States={
 	"Fall" : $StateMachineX/FallX,
 	"Shoot": $StateMachineX/ShootX,
 	"WallGrab" : $StateMachineX/WallGrabX,
+	"WallShot" : $StateMachineX/WallShotX,
 	"WallKick": $StateMachineX/WallKickX,
 	"Dead" : $StateMachineX/DeadX
 }
+
 #OnReady Var
 onready var animationPlayer=$AnimationPlayer
 onready var fireTimer=$Firing
@@ -59,6 +65,7 @@ onready var IdleFire=$IdleFire
 onready var RunFire=$RunFire
 onready var JumpFire=$JumpFire
 onready var DashFire=$DashFire
+onready var WallFire=$WallFire
 onready var SFX=$SFX
 onready var Music=$Music
 onready var Charge2=$Charge2
@@ -73,6 +80,7 @@ func _ready():
 	RunFire.position.x*=-1
 	JumpFire.position.x*=-1
 	DashFire.position.x*=-1
+	WallFire.position.x*=-1
 	face_right=true
 	actual_facing=true
 	can_dash=true
@@ -87,6 +95,7 @@ func _physics_process(_delta):
 	if update_state!=null:
 		change_state(update_state);
 		currentState._enter_state()
+	print(update_state)
 	if currentState!=States.Spawn:
 		#Charge
 		if Input.is_action_pressed("Attack"):
@@ -114,8 +123,9 @@ func _physics_process(_delta):
 		RunFire.position.x*=-1
 		JumpFire.position.x*=-1
 		DashFire.position.x*=-1
+		WallFire.position.x*=-1
 		actual_facing=face_right
-	if currentState==States.WallGrab:
+	if currentState==States.WallGrab||currentState==States.WallShot:
 		velocity.y+=GRAVITY
 		if(velocity.y>MAXFALLSPEED/4):
 			velocity.y=MAXFALLSPEED/4
@@ -154,6 +164,10 @@ func fire():
 		bullet.set_direction(1)
 	else:
 		bullet.set_direction(-1)
+	if lastState=="WallGrab":
+		bullet.set_direction(bullet.direction*-1)
+		if face_right==false:
+			bullet.scale.x*=-1
 	ChargeSound.stop()
 	bulletPosition()
 	get_parent().add_child(bullet)
@@ -171,7 +185,9 @@ func bulletPosition():
 			bullet.position=$JumpFire.global_position
 		"Dash":
 			bullet.position=$DashFire.global_position
-
+		"WallGrab":
+			bullet.position=$WallFire.global_position
+			
 func shoot():
 	currentAnimation=animationPlayer.current_animation_position
 	match lastState:
@@ -192,6 +208,8 @@ func shoot():
 		"Dash":
 			animationPlayer.play("DashFire")
 			animationPlayer.seek(currentAnimation)
+		"WallGrab":
+			animationPlayer.play("WallShot")
 			
 func _Spawned():
 	currentState=States.Idle
@@ -226,6 +244,10 @@ func shot_ended():
 			animationPlayer.seek(currentAnimation)
 			currentState=States.Dash
 			currentState._enter_state()
+		"WallGrab":
+			animationPlayer.play("WallGrab")
+			animationPlayer.seek(0.3)
+
 		
 func _on_Firing_timeout():
 	shot_ended()
