@@ -293,6 +293,7 @@ script = ExtResource( 2 )
 SPEED = 200
 DASHSPEED = 400
 GRAVITY = 20
+JUMPFORCE = -600
 
 [node name="FirstCharge" type="Particles2D" parent="."]
 position = Vector2( -0.037672, -6.3217 )

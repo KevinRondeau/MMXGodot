@@ -95,7 +95,6 @@ func _physics_process(_delta):
 	if update_state!=null:
 		change_state(update_state);
 		currentState._enter_state()
-	print(update_state)
 	if currentState!=States.Spawn:
 		#Charge
 		if Input.is_action_pressed("Attack"):
@@ -247,7 +246,6 @@ func shot_ended():
 		"WallGrab":
 			animationPlayer.play("WallGrab")
 			animationPlayer.seek(0.3)
-
 		
 func _on_Firing_timeout():
 	shot_ended()
