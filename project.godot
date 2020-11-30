@@ -53,6 +53,8 @@ Jump={
 2d_physics/layer_4="Ennemies"
 2d_physics/layer_5="BackGround"
 2d_physics/layer_6="ForeGround"
+2d_physics/layer_7="FallZoneCharacter"
+2d_physics/layer_8="FallZoneEnnemies"
 
 [rendering]
 

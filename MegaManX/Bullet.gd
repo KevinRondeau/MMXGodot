@@ -4,6 +4,7 @@ const SPEED=750
 var velocity=Vector2()
 var direction=1
 var state=0
+var damage=2
 
 func _ready():
 	$AnimatedSprite.play("Spawn")

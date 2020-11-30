@@ -4,6 +4,7 @@ const SPEED=750
 var velocity=Vector2()
 var direction=1
 var state=0
+var damage=6
 
 func _ready():
 	$AnimatedSprite.play("Spawn")
@@ -25,11 +26,12 @@ func _on_VisibilityNotifierCharge_screen_exited():
 	queue_free()
 
 
-func _on_FirstCharge_body_entered(_body):
-	state=1
-	velocity.x=0
-	$AnimatedSprite.play("Hit")
-	$HitChargeTimer.start(0.2)
+func _on_FirstCharge_body_entered(body):
+	if body.collision_layer==1 or body.collision_layer==8:
+		state=1
+		velocity.x=0
+		$AnimatedSprite.play("Hit")
+		$HitChargeTimer.start(0.2)
 
 
 func _on_HitChargeTimer_timeout():

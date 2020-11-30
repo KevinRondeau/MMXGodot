@@ -5,7 +5,6 @@ export var DASHSPEED=300
 export var GRAVITY=40
 export var MAXFALLSPEED=1000
 export var JUMPFORCE=-2000
-
 const FLOOR=Vector2(0,-1)
 
 #Input&Facing
@@ -252,3 +251,7 @@ func _on_Firing_timeout():
 
 func _on_ShotTimer_timeout():
 	can_shoot=true
+
+
+func _on_FallZone_body_entered(_body):
+	get_tree().change_scene("res://World.tscn")
