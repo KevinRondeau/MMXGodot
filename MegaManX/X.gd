@@ -1,8 +1,9 @@
 extends KinematicBody2D
+
 #Physics
 export var SPEED=150
 export var DASHSPEED=300
-export var GRAVITY=40
+export var GRAVITY=25
 export var MAXFALLSPEED=1000
 export var JUMPFORCE=-2000
 const FLOOR=Vector2(0,-1)
@@ -16,7 +17,7 @@ var can_jump
 var can_shoot
 var can_dash;
 var charge=0;
-
+var iframe=false
 #preload scene to shoot bullet
 const BULLET=preload("res://MegaManX/Bullet.tscn")
 const FIRSTCHARGE=preload("res://MegaManX/FirstCharge.tscn")
@@ -32,6 +33,7 @@ var ChargingSound=load("res://Assets/SFX/MMXSFX/ChargeSound.wav")
 var Charge1Sound=load("res://Assets/SFX/MMXSFX/Charged1.wav")
 var Charge2Sound=load("res://Assets/SFX/MMXSFX/Charged2.wav")
 var WallKickSound=load( "res://Assets/SFX/MMXSFX/WallKick.wav")
+var TakeHit=load("res://Assets/SFX/MMXSFX/XTakeHit.wav")
 var DeathSound=load("res://Assets/SFX/MMXSFX/XDeath.wav")
 
 onready var States={
@@ -45,9 +47,9 @@ onready var States={
 	"WallGrab" : $StateMachineX/WallGrabX,
 	"WallShot" : $StateMachineX/WallShotX,
 	"WallKick": $StateMachineX/WallKickX,
+	"Hurt" : $StateMachineX/HurtX,
 	"Dead" : $StateMachineX/DeadX
 }
-
 #OnReady Var
 onready var animationPlayer=$AnimationPlayer
 onready var fireTimer=$Firing
@@ -71,9 +73,11 @@ onready var Charge2=$Charge2
 onready var Charge1=$Charge1
 onready var Shot=$Shot
 onready var ChargeSound=$ChargeSound
-
+onready var DeadTimer=$DeadTimer
+var stats=PlayerStats
 
 func _ready():
+	PlayerStats.connect("zero_health",self,"die")
 	sprite.scale.x*=-1
 	IdleFire.position.x*=-1
 	RunFire.position.x*=-1
@@ -247,11 +251,61 @@ func shot_ended():
 			animationPlayer.seek(0.3)
 		
 func _on_Firing_timeout():
-	shot_ended()
+	if !iframe:
+		shot_ended()
 
 func _on_ShotTimer_timeout():
 	can_shoot=true
 
 
 func _on_FallZone_body_entered(_body):
+	die()
+
+func _iframe_end():
+	iframe=false
+	if !is_on_floor():
+		currentState=States.Fall
+		currentState._enter_state()
+		$HurtBox.set_deferred("monitorable",true)
+	elif currentState!=States.Dead:
+		currentState=States.Move
+		currentState._enter_state()
+		$HurtBox.set_deferred("monitorable",true)
+
+func _on_HurtBox_body_entered(body):
+		if !iframe&&currentState!=States.Dead:
+			$HurtBox.set_deferred("monitorable",false)
+			velocity.x= velocity.x*-1
+			velocity=move_and_slide(velocity,FLOOR)
+			var damage=body.stats.damage
+			iframe=true
+			SFX.stream=TakeHit
+			SFX.play()
+			stats.health-=damage
+			currentState=States.Hurt
+			currentState._enter_state()
+
+func die():
+	sprite.visible=false
+	currentState=States.Dead
+	SFX.stream=DeathSound
+	SFX.play()
+	currentState._enter_state()
+
+
+func _on_DeadTimer_timeout():
+	PlayerStats.set_health(32)
 	get_tree().change_scene("res://World.tscn")
+
+
+
+func _on_HurtBox_area_entered(area):
+	if !iframe&&currentState!=States.Dead&&!area.name.match("DetectionZone")&&!area.name.match("HurtBox"):
+			$HurtBox.set_deferred("monitorable",false)
+			velocity.x= velocity.x*-1
+			velocity=move_and_slide(velocity,FLOOR)
+			var damage=area.damage
+			iframe=true
+			stats.health-=damage
+			currentState=States.Hurt
+			currentState._enter_state()

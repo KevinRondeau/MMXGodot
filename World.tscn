@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Layout/ForeGround.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Layout/Floor.tscn" type="PackedScene" id=2]
@@ -6,8 +6,11 @@
 [ext_resource path="res://Layout/IntroBG.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Layout/BackGroundTile.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Layout/BackGround.tscn" type="PackedScene" id=6]
-[ext_resource path="res://HUD.tscn" type="PackedScene" id=7]
+[ext_resource path="res://HealthUI.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Wheel.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Launcher.tscn" type="PackedScene" id=9]
+[ext_resource path="res://World.gd" type="Script" id=10]
+[ext_resource path="res://Flies.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7432, 39 )
@@ -16,6 +19,7 @@ extents = Vector2( 7432, 39 )
 extents = Vector2( 10, 480 )
 
 [node name="World" type="Node2D"]
+script = ExtResource( 10 )
 
 [node name="BackGround" parent="." instance=ExtResource( 6 )]
 position = Vector2( -264, 512 )
@@ -32,7 +36,6 @@ position = Vector2( -256, 512 )
 [node name="X" parent="." instance=ExtResource( 3 )]
 scale = Vector2( 1.2, 1.2 )
 input_pickable = true
-GRAVITY = 25
 
 [node name="Camera2D" type="Camera2D" parent="X"]
 offset = Vector2( 200, 0 )
@@ -40,7 +43,61 @@ current = true
 zoom = Vector2( 0.5, 0.5 )
 limit_left = -400
 limit_top = 250
+limit_right = 8200
 limit_bottom = 1280
+
+[node name="Ennemies" type="Node2D" parent="."]
+
+[node name="Wheel" parent="Ennemies" instance=ExtResource( 8 )]
+position = Vector2( 1040, 475 )
+
+[node name="Wheel2" parent="Ennemies" instance=ExtResource( 8 )]
+position = Vector2( 2328, 584 )
+
+[node name="Wheel3" parent="Ennemies" instance=ExtResource( 8 )]
+position = Vector2( 3776, 632 )
+
+[node name="Wheel4" parent="Ennemies" instance=ExtResource( 8 )]
+position = Vector2( 4576, 704 )
+
+[node name="Wheel5" parent="Ennemies" instance=ExtResource( 8 )]
+position = Vector2( 4985.5, 672 )
+
+[node name="Wheel6" parent="Ennemies" instance=ExtResource( 8 )]
+position = Vector2( 7184, 512 )
+
+[node name="Wheel7" parent="Ennemies" instance=ExtResource( 8 )]
+position = Vector2( 6136, 824 )
+
+[node name="Wheel8" parent="Ennemies" instance=ExtResource( 8 )]
+position = Vector2( 5920, 840 )
+
+[node name="Launcher" parent="Ennemies" instance=ExtResource( 9 )]
+position = Vector2( 8328, 576 )
+
+[node name="Flies" parent="Ennemies" instance=ExtResource( 11 )]
+position = Vector2( 2600, 472 )
+
+[node name="Flies2" parent="Ennemies" instance=ExtResource( 11 )]
+position = Vector2( 960, 384 )
+
+[node name="Flies3" parent="Ennemies" instance=ExtResource( 11 )]
+position = Vector2( 1856, 384 )
+
+[node name="Flies4" parent="Ennemies" instance=ExtResource( 11 )]
+position = Vector2( 3200, 808 )
+
+[node name="Flies5" parent="Ennemies" instance=ExtResource( 11 )]
+position = Vector2( 4208, 592 )
+
+[node name="Flies6" parent="Ennemies" instance=ExtResource( 11 )]
+position = Vector2( 5454.5, 848 )
+
+[node name="Flies7" parent="Ennemies" instance=ExtResource( 11 )]
+position = Vector2( 6232, 734 )
+
+[node name="Flies8" parent="Ennemies" instance=ExtResource( 11 )]
+position = Vector2( 7248, 445 )
 
 [node name="ForeGround" parent="." instance=ExtResource( 1 )]
 position = Vector2( -256, 512 )
@@ -76,32 +133,13 @@ position = Vector2( -220, 0 )
 position = Vector2( 0, 475 )
 shape = SubResource( 2 )
 
-[node name="HUD" parent="." instance=ExtResource( 7 )]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Ennemies" type="Node2D" parent="."]
-
-[node name="Wheel" parent="Ennemies" instance=ExtResource( 8 )]
-position = Vector2( 1120, 480 )
-collision_mask = 129
-
-[node name="Wheel2" parent="Ennemies" instance=ExtResource( 8 )]
-position = Vector2( 2344, 568 )
-collision_mask = 129
-
-[node name="Wheel3" parent="Ennemies" instance=ExtResource( 8 )]
-position = Vector2( 3776, 632 )
-collision_mask = 129
-
-[node name="Wheel4" parent="Ennemies" instance=ExtResource( 8 )]
-position = Vector2( 4576, 704 )
-collision_mask = 129
-
-[node name="Wheel5" parent="Ennemies" instance=ExtResource( 8 )]
-position = Vector2( 4985.5, 672 )
-collision_mask = 129
+[node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 7 )]
+[connection signal="dead" from="Ennemies/Launcher" to="." method="_on_Launcher_dead"]
 [connection signal="body_entered" from="FallZone" to="X" method="_on_FallZone_body_entered"]
 [connection signal="body_entered" from="FallZoneEnnemies" to="Ennemies/Wheel5" method="_on_FallZoneEnnemies_body_entered"]
-[connection signal="body_entered" from="FallZoneEnnemies" to="Ennemies/Wheel4" method="_on_FallZoneEnnemies_body_entered"]
-[connection signal="body_entered" from="FallZoneEnnemies" to="Ennemies/Wheel2" method="_on_FallZoneEnnemies_body_entered"]
 [connection signal="body_entered" from="FallZoneEnnemies" to="Ennemies/Wheel3" method="_on_FallZoneEnnemies_body_entered"]
+[connection signal="body_entered" from="FallZoneEnnemies" to="Ennemies/Wheel4" method="_on_FallZoneEnnemies_body_entered"]
 [connection signal="body_entered" from="FallZoneEnnemies" to="Ennemies/Wheel" method="_on_FallZoneEnnemies_body_entered"]
+[connection signal="body_entered" from="FallZoneEnnemies" to="Ennemies/Wheel2" method="_on_FallZoneEnnemies_body_entered"]

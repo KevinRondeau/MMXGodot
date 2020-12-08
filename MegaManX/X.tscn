@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Assets/Sprite/MMXSpriteSheet.png" type="Texture" id=1]
 [ext_resource path="res://MegaManX/X.gd" type="Script" id=2]
@@ -19,6 +19,8 @@
 [ext_resource path="res://Assets/SFX/MMXSFX/Shot.wav" type="AudioStream" id=17]
 [ext_resource path="res://Assets/SFX/MMXSFX/Charged1.wav" type="AudioStream" id=18]
 [ext_resource path="res://MegaManX/WallShot.gd" type="Script" id=19]
+[ext_resource path="res://MegaManX/HurtX.gd" type="Script" id=20]
+[ext_resource path="res://MegaManX/DeadX.gd" type="Script" id=21]
 
 [sub_resource type="ParticlesMaterial" id=1]
 emission_shape = 1
@@ -80,6 +82,36 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=6]
+resource_name = "Hurt"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 195, 196, 197, 198, 199, 197, 198, 199, 197, 198, 199, 197, 198, 199, 197, 198, 199, 197, 198, 199 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.95 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_iframe_end"
+} ]
+}
+
+[sub_resource type="Animation" id=7]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -95,7 +127,7 @@ tracks/0/keys = {
 "values": [ 30, 31, 32, 33 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 0.25
 step = 0.05
 tracks/0/type = "value"
@@ -125,7 +157,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=9]
 length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -140,7 +172,7 @@ tracks/0/keys = {
 "values": [ 120, 121, 122, 123, 124, 125, 126, 127 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -153,23 +185,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 135, 136, 137, 138, 139, 140, 141, 142 ]
-}
-
-[sub_resource type="Animation" id=10]
-length = 0.75
-loop = true
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75 ]
 }
 
 [sub_resource type="Animation" id=11]
@@ -186,10 +201,27 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105 ]
+"values": [ 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75 ]
 }
 
 [sub_resource type="Animation" id=12]
+length = 0.75
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105 ]
+}
+
+[sub_resource type="Animation" id=13]
 length = 0.75
 step = 0.05
 tracks/0/type = "value"
@@ -219,7 +251,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 length = 0.1
 loop = true
 step = 0.05
@@ -236,8 +268,7 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=14]
-resource_name = "WallGrab"
+[sub_resource type="Animation" id=15]
 length = 0.35
 step = 0.05
 tracks/0/type = "value"
@@ -253,8 +284,7 @@ tracks/0/keys = {
 "values": [ 180, 181, 182, 183 ]
 }
 
-[sub_resource type="Animation" id=15]
-resource_name = "WallKick"
+[sub_resource type="Animation" id=16]
 length = 0.2
 step = 0.05
 tracks/0/type = "value"
@@ -270,8 +300,7 @@ tracks/0/keys = {
 "values": [ 184, 185, 186 ]
 }
 
-[sub_resource type="Animation" id=16]
-resource_name = "WallShot"
+[sub_resource type="Animation" id=17]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -286,14 +315,16 @@ tracks/0/keys = {
 "values": [ 187 ]
 }
 
+[sub_resource type="CapsuleShape2D" id=18]
+radius = 13.056
+
 [node name="X" type="KinematicBody2D"]
 collision_layer = 2147483650
 collision_mask = 65
-collision/safe_margin = 0.008
+collision/safe_margin = 0.02
 script = ExtResource( 2 )
 SPEED = 200
 DASHSPEED = 400
-GRAVITY = 20
 JUMPFORCE = -600
 
 [node name="FirstCharge" type="Particles2D" parent="."]
@@ -326,7 +357,7 @@ position = Vector2( 0.579559, -7.56808 )
 texture = ExtResource( 1 )
 vframes = 30
 hframes = 15
-frame = 150
+frame = 120
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
@@ -334,21 +365,24 @@ shape = SubResource( 3 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Dash = SubResource( 4 )
 anims/DashFire = SubResource( 5 )
-anims/Idle = SubResource( 6 )
-anims/IdleFire = SubResource( 7 )
-anims/Jump = SubResource( 8 )
-anims/JumpFire = SubResource( 9 )
-anims/Run = SubResource( 10 )
-anims/RunFire = SubResource( 11 )
-anims/Spawn = SubResource( 12 )
-anims/SpawnFall = SubResource( 13 )
-anims/WallGrab = SubResource( 14 )
-anims/WallKick = SubResource( 15 )
-anims/WallShot = SubResource( 16 )
+anims/Hurt = SubResource( 6 )
+anims/Idle = SubResource( 7 )
+anims/IdleFire = SubResource( 8 )
+anims/Jump = SubResource( 9 )
+anims/JumpFire = SubResource( 10 )
+anims/Run = SubResource( 11 )
+anims/RunFire = SubResource( 12 )
+anims/Spawn = SubResource( 13 )
+anims/SpawnFall = SubResource( 14 )
+anims/WallGrab = SubResource( 15 )
+anims/WallKick = SubResource( 16 )
+anims/WallShot = SubResource( 17 )
 
 [node name="Firing" type="Timer" parent="."]
 
 [node name="ShotTimer" type="Timer" parent="."]
+
+[node name="DeadTimer" type="Timer" parent="."]
 
 [node name="JumpFire" type="Position2D" parent="."]
 position = Vector2( -24.0941, -18.9737 )
@@ -399,8 +433,10 @@ script = ExtResource( 19 )
 script = ExtResource( 14 )
 
 [node name="HurtX" type="Node" parent="StateMachineX"]
+script = ExtResource( 20 )
 
 [node name="DeadX" type="Node" parent="StateMachineX"]
+script = ExtResource( 21 )
 
 [node name="SFX" type="AudioStreamPlayer2D" parent="."]
 visible = false
@@ -431,5 +467,15 @@ bus = "SFX"
 visible = false
 stream = ExtResource( 17 )
 bus = "SFX"
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource( 18 )
 [connection signal="timeout" from="Firing" to="." method="_on_Firing_timeout"]
 [connection signal="timeout" from="ShotTimer" to="." method="_on_ShotTimer_timeout"]
+[connection signal="timeout" from="DeadTimer" to="." method="_on_DeadTimer_timeout"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
+[connection signal="body_entered" from="HurtBox" to="." method="_on_HurtBox_body_entered"]

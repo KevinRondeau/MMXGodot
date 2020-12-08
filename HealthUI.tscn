@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://HealthUI.gd" type="Script" id=1]
+[ext_resource path="res://Assets/UI/HealthTile.png" type="Texture" id=2]
+[ext_resource path="res://Assets/UI/HealthBarBottom.png" type="Texture" id=3]
+[ext_resource path="res://Assets/UI/HealthBarTop.png" type="Texture" id=4]
+[ext_resource path="res://Assets/UI/HealthBarEmpty.png" type="Texture" id=5]
+
+[node name="HealthUI" type="Control"]
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 30.0
+margin_bottom = 99.0
+rect_scale = Vector2( 3, 3 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopUi" type="TextureRect" parent="."]
+margin_right = 14.0
+margin_bottom = 3.0
+texture = ExtResource( 4 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeUIEmpty" type="TextureRect" parent="."]
+margin_top = 3.0
+margin_right = 14.0
+margin_bottom = 64.0
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeUIFull" type="TextureRect" parent="."]
+margin_top = 3.0
+margin_right = 14.0
+margin_bottom = 67.0
+texture = ExtResource( 2 )
+stretch_mode = 2
+flip_v = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BottomUI" type="TextureRect" parent="."]
+margin_top = 67.0
+margin_right = 14.0
+margin_bottom = 72.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

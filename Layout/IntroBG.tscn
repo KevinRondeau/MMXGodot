@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Assets/Tiles/introStage.png" type="Texture" id=1]
 
-[sub_resource type="TileSet" id=29]
+[sub_resource type="TileSet" id=1]
 0/name = "introStage.png 0"
 0/texture = ExtResource( 1 )
 0/tex_offset = Vector2( 0, 0 )
@@ -20,7 +20,7 @@
 
 [node name="IntroBG" type="TileMap"]
 scale = Vector2( 3, 3 )
-tile_set = SubResource( 29 )
+tile_set = SubResource( 1 )
 cell_size = Vector2( 8, 8 )
 format = 1
 tile_data = PoolIntArray( -983035, 0, 0 )
