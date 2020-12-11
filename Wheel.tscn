@@ -87,6 +87,7 @@ frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 1, 0 )
 shape = SubResource( 11 )
 
@@ -96,6 +97,7 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+visible = false
 position = Vector2( -0.0991008, 0 )
 shape = SubResource( 12 )
 
@@ -106,6 +108,7 @@ collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
+visible = false
 shape = SubResource( 13 )
 
 [node name="Stats" parent="." instance=ExtResource( 3 )]
